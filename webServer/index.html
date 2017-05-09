@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:600" rel="stylesheet"></head>
+
+
+<script>
+
+</script>
+<style media="screen">
+
+h3{
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  color: #929292;
+
+
+}
+h1{
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+  color: #7e8b8c;
+}
+form {
+  text-align: center;
+}
+input[type=text] {
+  margin-top: 20px;
+  margin-bottom: 25px;
+  width: 35%;
+  border: 1px solid #ccc;
+  padding: 8px 15px;
+  border-radius: 6px;
+  font-size: 20px;
+  outline:none;
+
+
+}
+input{
+   text-align:center;
+}
+input[type="submit"] {
+
+  background-color: #3498db;
+  width: 190px;
+  height: 55px;
+  margin-top: 25px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 15px;
+  color: white;
+  margin-left: auto ;
+  margin-right: auto ;
+  outline:none;
+
+}
+
+
+#logo {
+  text-align: center;
+  margin-top: 100px;
+
+
+}
+
+
+</style>
+
+<body>
+
+  <div id="logo" >
+    <img src="logo.png" alt="HTML5 Icon" style="width:15%;height:15%;">
+  </div>
+
+  <form method='POST' id='form' action='/cgi-bin/formHandler.py'>
+     <input type='text' placeholder="Device token" name='token'>
+    <br>
+  <input type='submit' value='Activate Device'>
+  </form>
+
+
+</body>
+
+
+<script>
+
+
+ $('#form').submit(function( event ) {
+
+ var text = $('#form').find('input[name="token"]').val();
+
+ if(text != ''){
+
+   console.log("submit");
+  $(body).off("submit", "form");
+  $('#form').submit();
+ }
+ else{
+
+ $('input[name="token"]').addClass('animated shake').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+    function() {
+    $(this).removeClass('animated shake');
+
+ });
+
+
+ }
+
+ event.preventDefault();
+ });
+
+
+
+</script>
+
+
+</html>
