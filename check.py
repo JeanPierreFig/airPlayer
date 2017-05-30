@@ -56,13 +56,10 @@ def CheckServerForContent():
           link = j['data'][i]['link']
           linkArray = link.split("/")
           imageURl = "{0}".format(link)
-<<<<<<< HEAD
+
 
           savePathWithName = "/home/pi/airplayer/webServer/content/{0}".format(linkArray[-1])
-=======
 
-          savePathWithName = "/home/pi/webServer/content/{0}".format(linkArray[-1])
->>>>>>> 27f2bfb3250c6e4ab72b5c029b986caf630d2cd2
           imageFile = Path(savePathWithName)
 
 
@@ -295,7 +292,6 @@ def main():
 
 
 
-<<<<<<< HEAD
 
 
     #print(get_ip())
