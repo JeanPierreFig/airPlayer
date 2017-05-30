@@ -8,8 +8,7 @@ import os
 import webview
 import threading
 import socket
-import dbus
-import wifihan
+#import import wifihan
 import webServer
 from datetime import datetime
 from createHtml import createHtml
@@ -36,7 +35,7 @@ json_count = 0
 
 def CheckServerForContent():
 
-    with open('/home/pi/Plist.json') as json_data:
+    with open('/home/pi/airplayer/Plist.json') as json_data:
           global Plist
           Plist = json.load(json_data)
     data = {'Access_token':Plist['Access_token']}
@@ -58,7 +57,7 @@ def CheckServerForContent():
           linkArray = link.split("/")
           imageURl = "{0}".format(link)
           
-          savePathWithName = "/home/pi/webServer/content/{0}".format(linkArray[-1])
+          savePathWithName = "/home/pi/airplayer/webServer/content/{0}".format(linkArray[-1])
           imageFile = Path(savePathWithName)
           
           
@@ -84,7 +83,7 @@ def CheckServerForContent():
        if index == count:
           print('all good')
 
-          with open('/home/pi/data.json', 'w') as outfile:
+          with open('/home/pi/airplayer/data.json', 'w') as outfile:
               outfile.write(json.dumps(j))
               
           create_content_list()
@@ -200,7 +199,7 @@ def content_loop(contentObject):
 def DeleteFiles(j):
     
     # if mac test on /Users/jeanpierre/Desktop/images/
-    listOfFiles = os.listdir("/home/pi/webServer/content/")
+    listOfFiles = os.listdir("/home/pi/airplayer/webServer/content/")
     
     count = (j['header'][0]['count'])
     print(listOfFiles)
@@ -279,7 +278,7 @@ def get_ip():
 
 def StartContentServer():
     # if mac test on /Users/jeanpierre/Desktop/webServer
-    os.chdir("/home/pi/webServer")
+    os.chdir("/home/pi/airplayer/webServer")
     webServer.start()
 
 
@@ -288,14 +287,14 @@ def main():
 
     
     
-        
-    print(get_ip())
+    """
+    #print(get_ip())
 
-    wifihan.Connect("Claro425EE1","0C77A3FADB")
+    #wifihan.Connect("Claro425EE1","0C77A3FADB")
 
     #print(isConnected)
    
-    with open('/home/pi/Plist.json') as json_data:
+    with open('/home/pi/airplayer/Plist.json') as json_data:
           global Plist
           Plist = json.load(json_data)
     
@@ -339,7 +338,7 @@ def main():
 
         while Plist["isSetup"] == False:
 
-              with open('/home/pi/Plist.json') as json_data:
+              with open('/home/pi/airplayer/Plist.json') as json_data:
                     Plist = json.load(json_data)
                     time.sleep(15)
 
@@ -348,7 +347,7 @@ def main():
             CheckServerForContent()
             contentObj = contentObject()
             create_content_list()
-            webview.load_html(createHtml("","logo"))
+            #webview.load_html(createHtml("","logo"))
             
             
             while True:
@@ -358,7 +357,7 @@ def main():
 
 
 
-
+"""
 
 
 
