@@ -57,7 +57,7 @@ def CheckServerForContent():
           linkArray = link.split("/")
           imageURl = "{0}".format(link)
 <<<<<<< HEAD
-          
+
           savePathWithName = "/home/pi/airplayer/webServer/content/{0}".format(linkArray[-1])
 =======
 
@@ -204,13 +204,9 @@ def content_loop(contentObject):
 def DeleteFiles(j):
 
     # if mac test on /Users/jeanpierre/Desktop/images/
-<<<<<<< HEAD
-    listOfFiles = os.listdir("/home/pi/airplayer/webServer/content/")
-    
-=======
-    listOfFiles = os.listdir("/home/pi/webServer/content/")
 
->>>>>>> 27f2bfb3250c6e4ab72b5c029b986caf630d2cd2
+    listOfFiles = os.listdir("/home/pi/airplayer/webServer/content/")
+
     count = (j['header'][0]['count'])
     print(listOfFiles)
 
@@ -298,25 +294,18 @@ def main():
 
 
 
-    
+
 <<<<<<< HEAD
-    
-    """
+
+
     #print(get_ip())
 
     #wifihan.Connect("Claro425EE1","0C77A3FADB")
 
     #print(isConnected)
-   
+
     with open('/home/pi/airplayer/Plist.json') as json_data:
-=======
 
-
-
-    #print(isConnected)
-
-    with open('/home/pi/Plist.json') as json_data:
->>>>>>> 27f2bfb3250c6e4ab72b5c029b986caf630d2cd2
           global Plist
           Plist = json.load(json_data)
 
@@ -369,15 +358,10 @@ def main():
             CheckServerForContent()
             contentObj = contentObject()
             create_content_list()
-<<<<<<< HEAD
-            #webview.load_html(createHtml("","logo"))
-            
-            
-=======
+
             webview.load_html(createHtml("","logo"))
 
 
->>>>>>> 27f2bfb3250c6e4ab72b5c029b986caf630d2cd2
             while True:
 
                 content_loop(contentObj)
@@ -385,7 +369,7 @@ def main():
 
 
 
-"""
+
 
 
 
