@@ -306,7 +306,7 @@ def main():
           Plist = json.load(json_data)
 
     s = threading.Thread(target=StartContentServer)
-    #s.start()
+    s.start()
 
     print(get_ip())
 
