@@ -1,4 +1,4 @@
- 
+
 import requests
 import json
 import time
@@ -20,7 +20,7 @@ from pathlib import Path
 #from selenium.webdriver.chrome.options import Options
 
 url = 'http://10.0.0.69/updateContent.php'
-#need to change this to look for saved access_token 
+#need to change this to look for saved access_token
 headers = {'content-type': 'application/json'}
 
 
@@ -49,22 +49,27 @@ def CheckServerForContent():
        count = (j['header'][0]['count'])
        index = 0
        for i in range(count):
-           
-           
-           
-          index = i + 1 
+
+
+
+          index = i + 1
           link = j['data'][i]['link']
           linkArray = link.split("/")
           imageURl = "{0}".format(link)
+<<<<<<< HEAD
           
           savePathWithName = "/home/pi/airplayer/webServer/content/{0}".format(linkArray[-1])
+=======
+
+          savePathWithName = "/home/pi/webServer/content/{0}".format(linkArray[-1])
+>>>>>>> 27f2bfb3250c6e4ab72b5c029b986caf630d2cd2
           imageFile = Path(savePathWithName)
-          
-          
+
+
           #Check if we have the file on the unit to not dowload it again
           if imageFile.is_file():
               print("have file")
-          
+
           else:
           #look for the file on the s3 server and save it to the local forder
                urllib.request.urlretrieve(imageURl,savePathWithName)
@@ -75,9 +80,9 @@ def CheckServerForContent():
                   print('good panda')
                else:
                     break
-    
+
             #This check if there are files in the dir that do not need to be there
-      
+
 
 
        if index == count:
@@ -85,28 +90,28 @@ def CheckServerForContent():
 
           with open('/home/pi/airplayer/data.json', 'w') as outfile:
               outfile.write(json.dumps(j))
-              
+
           create_content_list()
           #send downlod confermation
           threading.Timer(120, CheckServerForContent).start()
           print("Done checking server.")
-        
-          DeleteFiles(j)
-          
-          
-         
 
-              
-                
+          DeleteFiles(j)
+
+
+
+
+
+
        else:
           print('nope nope nope')
           #send error messesge
 
-          
-          
+
+
 
 #Not checking if the firs time it downloaded content.
-    else:         
+    else:
        threading.Timer(120, CheckServerForContent).start()
        print("Checking Server.")
 
@@ -119,23 +124,23 @@ class contentObject(object):
 
         self.index = 0
         self.contentPath = None
-        
-        
+
+
     def get_next_content_index(self):
 
         #check for amount of itmes on the json list
-        
-       
-        self.index += 1
-        
-        
 
-        
+
+        self.index += 1
+
+
+
+
         if self.index > json_count-1:
            self.index = 0
-        
-        
-        
+
+
+
         return self.index
 
 
@@ -150,30 +155,30 @@ def create_content_list():
         global content_list,json_count
         content_list = d['data']
         json_count = d['header'][0]['count']
-       
-    
 
-## main loop to display the content    
+
+
+## main loop to display the content
 def content_loop(contentObject):
 
-    
+
     index = contentObject.get_next_content_index()
-    
+
     link = content_list[index]['link']
     linkArray = link.split("/")
     itemName = linkArray[-1]
-    
+
 
     if content_list[index]['type'] == 'image':
-        
-        
+
+
         if isShowed(contentObject,index):
-            
+
            webview.load_html(createHtml("http://localhost:8000/content/{0}".format(itemName),"content"))
            print("yes")
-        
+
            time.sleep(5)
-               
+
         else:
             print("Date not right")
             time.sleep(5)
@@ -189,21 +194,26 @@ def content_loop(contentObject):
         #player.play()
         #time.sleep(player.duration())
 
-        
-        
-    
-            
-      
-    
+
+
+
+
+
+
 
 def DeleteFiles(j):
-    
+
     # if mac test on /Users/jeanpierre/Desktop/images/
+<<<<<<< HEAD
     listOfFiles = os.listdir("/home/pi/airplayer/webServer/content/")
     
+=======
+    listOfFiles = os.listdir("/home/pi/webServer/content/")
+
+>>>>>>> 27f2bfb3250c6e4ab72b5c029b986caf630d2cd2
     count = (j['header'][0]['count'])
     print(listOfFiles)
-    
+
     #Check for the file on my json object and remove is from the list of files stored on the dir
     for i in range(count):
 
@@ -218,7 +228,7 @@ def DeleteFiles(j):
 
     #now remove the file from the dir
     for file in listOfFiles:
-        
+
         # if mac test on /Users/jeanpierre/Desktop/images/
         #os.remove("/home/pi/webServer/content/{0}".format(file))
         print("delete")
@@ -227,25 +237,25 @@ def DeleteFiles(j):
 
 
 def isShowed(contentObject,index):
-    
-    
-    
+
+
+
     sDate = content_list[index]['sDate'].split("/")
     eDate = content_list[index]['eDate'].split("/")
     sTime = content_list[index]['sTime'].split("/")
     eTime = content_list[index]['eTime'].split("/")
-    
+
     day = datetime.today().day
     year = datetime.today().year
     month = datetime.today().month
-    
-    
-    
+
+
+
     #Check that the year month and day rang is correct
     if day >= int(sDate[1]) and day <= int(eDate[1]) and month >= int(sDate[0]) and month <= int(eDate[0]) and  year >= int(sDate[2]) and year <= int(eDate[2]):
-        
+
         return True
-    
+
 
     else:
         return False
@@ -285,7 +295,11 @@ def StartContentServer():
 def main():
 
 
+
+
+
     
+<<<<<<< HEAD
     
     """
     #print(get_ip())
@@ -295,14 +309,22 @@ def main():
     #print(isConnected)
    
     with open('/home/pi/airplayer/Plist.json') as json_data:
+=======
+
+
+
+    #print(isConnected)
+
+    with open('/home/pi/Plist.json') as json_data:
+>>>>>>> 27f2bfb3250c6e4ab72b5c029b986caf630d2cd2
           global Plist
           Plist = json.load(json_data)
-    
+
     s = threading.Thread(target=StartContentServer)
     #s.start()
 
     print(get_ip())
-    
+
     if Plist["isSetup"]:
             print("yes")
 
@@ -322,19 +344,19 @@ def main():
 
 
         if get_ip() == False:
-        
+
              webview.load_html(createHtml(get_ip(),"network"))
              print('no ip')
-        
+
         elif is_connected == False:
-        
+
              webview.load_html(createHtml(get_ip(),"network"))
              print("connected to a network but not the internet")
-        
+
         else:
-        
+
             webview.load_html(createHtml(get_ip(),"Access_token"))
-        
+
 
         while Plist["isSetup"] == False:
 
@@ -347,11 +369,17 @@ def main():
             CheckServerForContent()
             contentObj = contentObject()
             create_content_list()
+<<<<<<< HEAD
             #webview.load_html(createHtml("","logo"))
             
             
+=======
+            webview.load_html(createHtml("","logo"))
+
+
+>>>>>>> 27f2bfb3250c6e4ab72b5c029b986caf630d2cd2
             while True:
-                
+
                 content_loop(contentObj)
 
 
@@ -362,29 +390,17 @@ def main():
 
 
 
-        
+
 if __name__ == "__main__":
 
     try:
 
        t = threading.Thread(target=main)
        t.start()
-        
+
        webview.create_window("","",fullscreen=False)
-                
+
 
     except:
 
         raise
-
-        
-
-
-
-
-
-    
-
-
-
-     
