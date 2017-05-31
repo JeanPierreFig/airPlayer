@@ -294,7 +294,7 @@ def main():
 
 
 
-    #print(get_ip())
+    print(get_ip())
 
     #wifihan.Connect("Claro425EE1","0C77A3FADB")
 
