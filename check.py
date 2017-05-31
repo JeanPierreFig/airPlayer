@@ -298,16 +298,6 @@ def StartContentServer():
 def main():
 
 
-
-
-
-
-
-
-    print(get_ip())
-    print(get_interface_ipaddress('wlan0'))
-
-
     #wifihan.Connect("Claro425EE1","0C77A3FADB")
 
     #print(isConnected)
@@ -320,7 +310,6 @@ def main():
     s = threading.Thread(target=StartContentServer)
     s.start()
 
-    print(get_ip())
 
     if Plist["isSetup"]:
             print("yes")
@@ -338,41 +327,28 @@ def main():
     else:
         print("no")
 
-
+        webview.load_html(createHtml("169.254.9.20","network"))
+        print('hotspotd')
         # I have to check if this if is correct
-        if get_ip() == False:
-
-             webview.load_html(createHtml(get_ip(),"network"))
-             print('no ip')
-
-        elif is_connected == False:
-
-             webview.load_html(createHtml(get_ip(),"network"))
-             print("connected to a network but not the internet")
-
-        else:
-
-            webview.load_html(createHtml(get_ip(),"Access_token"))
 
 
         while Plist["isSetup"] == False:
 
               with open('/home/pi/airplayer/Plist.json') as json_data:
-                    Plist = json.load(json_data)
-                    time.sleep(15)
+                       Plist = json.load(json_data)
+                       time.sleep(15)
 
         else:
 
             CheckServerForContent()
             contentObj = contentObject()
             create_content_list()
-
             webview.load_html(createHtml("","logo"))
 
 
             while True:
 
-                content_loop(contentObj)
+                      content_loop(contentObj)
 
 
 

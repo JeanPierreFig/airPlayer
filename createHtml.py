@@ -181,7 +181,7 @@ def createHtml(data,type):
             <div id="logo" >
             <img src="http://localhost:8000/logo.png" alt="HTML5 Icon" style="max-width: 20%; max-height: 20%;" class="center">
             </div>
-            <h3>Go to your computor make sure it's connected to the same network and type the address on your web browser<h3>
+            <h2>On your computer connect to AirWiFi and type the address on your web browser<h3>
             <h1>/ip/:8000</h1>
 
 
