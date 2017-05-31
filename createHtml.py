@@ -155,7 +155,7 @@ def createHtml(data,type):
             <link href="https://fonts.googleapis.com/css?family=Open+Sans:600" rel="stylesheet"></head>
             <style media="screen">
 
-            h3{
+            h2{
             text-align: center;
             font-family: 'Open Sans', sans-serif;
             color: #929292
@@ -181,7 +181,7 @@ def createHtml(data,type):
             <div id="logo" >
             <img src="http://localhost:8000/logo.png" alt="HTML5 Icon" style="max-width: 20%; max-height: 20%;" class="center">
             </div>
-            <h2>On your computer connect to AirWiFi and type the address on your web browser<h3>
+            <h2>On your computer connect to AirWiFi and type the address on your web browser<h2>
             <h1>/ip/:8000</h1>
 
 
