@@ -307,6 +307,7 @@ def main():
     print(get_ip())
     print(get_interface_ipaddress('wlan0'))
 
+
     #wifihan.Connect("Claro425EE1","0C77A3FADB")
 
     #print(isConnected)
