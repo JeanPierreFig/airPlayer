@@ -8,6 +8,8 @@ import os
 import webview
 import threading
 import socket
+import fcntl
+
 #import import wifihan
 import webServer
 from datetime import datetime
@@ -278,6 +280,14 @@ def get_ip():
     except OSError:
       return False
 
+def get_interface_ipaddress(network):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    return socket.inet_ntoa(fcntl.ioctl(
+        s.fileno(),
+        0x8915,  # SIOCGIFADDR
+        struct.pack('256s', network[:15])
+    )[20:24])
+
 
 def StartContentServer():
     # if mac test on /Users/jeanpierre/Desktop/webServer
@@ -294,7 +304,8 @@ def main():
 
 
 
-    #print(get_ip())
+    print(get_ip())
+    print(get_interface_ipaddress('wlan0'))
 
     #wifihan.Connect("Claro425EE1","0C77A3FADB")
 
@@ -327,7 +338,7 @@ def main():
         print("no")
 
 
-
+        # I have to check if this if is correct
         if get_ip() == False:
 
              webview.load_html(createHtml(get_ip(),"network"))
