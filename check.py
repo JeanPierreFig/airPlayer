@@ -9,7 +9,6 @@ import webview
 import threading
 import socket
 import fcntl
-import hotspotd
 import subprocess
 
 
