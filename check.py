@@ -300,7 +300,7 @@ def StartContentServer():
 
 def startHotSpot():
     try:
-        subprocess.call("sudo hotspotd start"shell=True)
+        subprocess.call("sudo hotspotd start",shell=True)
         # change the word lumberjack on the line above to get an error
     except OSError:
         print('\nCould not start the hotspotd\n')
@@ -341,7 +341,7 @@ def main():
         print("no")
 
         try:
-            subprocess.call("sudo hotspotd start"shell=True)
+            subprocess.call("sudo hotspotd start",shell=True)
 
         except OSError:
             startHotSpot()
