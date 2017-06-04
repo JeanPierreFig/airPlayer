@@ -9,6 +9,10 @@ import webview
 import threading
 import socket
 import fcntl
+import hotspotd
+import subprocess
+
+
 
 #import import wifihan
 import webServer
@@ -295,6 +299,14 @@ def StartContentServer():
     webServer.start()
 
 
+def startHotSpot():
+    try:
+        subprocess.call("sudo hotspotd start")
+        # change the word lumberjack on the line above to get an error
+    except OSError:
+        print('\nCould not start the hotspotd\n')
+        # if you're using python 2.x, change the () to spaces on the line above
+
 def main():
 
 
@@ -309,6 +321,8 @@ def main():
 
     s = threading.Thread(target=StartContentServer)
     s.start()
+
+
 
 
     if Plist["isSetup"]:
@@ -327,12 +341,24 @@ def main():
     else:
         print("no")
 
+        try:
+            subprocess.call("sudo hotspotd start")
+
+        except OSError:
+            startHotSpot()
+
+
+
+
         webview.load_html(createHtml("169.254.9.20","Access_token"))
         print('hotspotd')
         # I have to check if this if is correct
 
 
         while Plist["isSetup"] == False:
+
+
+
 
               with open('/home/pi/airplayer/Plist.json') as json_data:
                        Plist = json.load(json_data)
