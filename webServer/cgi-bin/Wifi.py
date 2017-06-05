@@ -22,7 +22,7 @@ print ("Content-type: text/html\n\n")
 
 
 
-htmlString """
+htmlString = """
 
         <!DOCTYPE html>
         <html>
@@ -172,7 +172,6 @@ htmlString """
 
         </html>
 
+        """.format(htmlList)
 
-    """.format(htmlList)
-
-    print(htmlString)
+print(htmlString)

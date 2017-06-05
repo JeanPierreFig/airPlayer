@@ -20,7 +20,7 @@ print "Content-type: text/html\n\n";
 if isConnect == False:
 
 
-    htmlString """
+    htmlString = """
 
     <!DOCTYPE html>
     <html>
