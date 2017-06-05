@@ -1,16 +1,9 @@
-#!/usr/bin/python
+#!/usr/bin/python3
+
 import cgi, cgitb, os
-
-
-
 import wifiHandler
 
-
-
-
 cgitb.enable()
-
-
 
 
 wifiList = wifiHandler.Search()
@@ -25,11 +18,11 @@ for wifi in wifiList:
 
 
 
-print "Content-type: text/html\n\n";
+print ("Content-type: text/html\n\n")
 
 
 
-print """
+htmlString """
 
         <!DOCTYPE html>
         <html>
@@ -60,7 +53,7 @@ print """
         border-collapse: collapse;
         margin: 0 auto;
         margin-top: 20px;
-        
+
 
         }
 
@@ -89,7 +82,7 @@ print """
         form {
         text-align: center;
         }
-        
+
         input[type=text] {
         margin-top: 20px;
         margin-bottom: 25px;
@@ -99,7 +92,7 @@ print """
         border-radius: 6px;
         font-size: 20px;
         outline:none;
-        
+
 
 
 
@@ -141,8 +134,7 @@ print """
 
         <div class="tableview">
         <table id="table">
-
-        /wifiList/
+         {0}
 
         </table>
         </div>
@@ -169,8 +161,6 @@ print """
         $("#wifiList").remove();
             $("#wifiPassword").append("<h1>Password for "+value+"</h1><form method='POST' id='form'action='/cgi-bin/wifiConnect.py'><input type='text' id='text-Input' placeholder='Password' name='password' value=''> <input type='hidden' name='ssid' value='"+value+"'><br> <input type='submit' value='Connect'></form>")
 
-
-
         });
 
          $('.ok').on('click', function(e){
@@ -182,6 +172,7 @@ print """
 
         </html>
 
-           
-    """.replace('/wifiList/', htmlList)
 
+    """.format(htmlList)
+
+    print(htmlString)

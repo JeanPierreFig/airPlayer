@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 
 import wifi
 
@@ -71,7 +71,7 @@ def Connect(ssid, password=None):
                     return False
 
                 return cell
-    
+
     return False
 
 
@@ -95,4 +95,3 @@ def Delete(ssid):
         return True
 
     return False
-
