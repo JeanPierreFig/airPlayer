@@ -193,7 +193,7 @@ def createHtml(data,type):
 
 
 
-    if type == "network":
+    if type == "Message":
 
         html = """
 
@@ -221,12 +221,10 @@ def createHtml(data,type):
             </style>
 
             <body>
-
+            
             <img src="http://localhost:8000/logo.png"   alt="HTML5 Icon" class="center">
 
-            <h3>You are connected to network that is not connected to the internet.</h3>
-
-
+            <h3>//message//</h3>
 
             </body>
 
@@ -235,6 +233,6 @@ def createHtml(data,type):
             </html>
 
 
-            """
+            """.replace('/message/', data)
 
     return html

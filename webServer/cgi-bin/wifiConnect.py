@@ -12,124 +12,62 @@ ssid = formData['ssid'].value
 
 
 
-isConnect = wifiHandler.Connect(ssid,password)
-
-
-print "Content-type: text/html\n\n";
-
-if isConnect == False:
-
-
-    htmlString = """
-
-    <!DOCTYPE html>
-    <html>
-
-    <head>
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:600" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
-
-    </head>
-
-    <style media="screen">
-
-    h3{
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-    color: #929292
-
-
-    }
-    h1{
-    text-align: center;
-    font-family: 'Open Sans', sans-serif;
-    color: #7e8b8c
-    }
-
-    form {
-    text-align: center;
-    }
-    input[type=text] {
-    margin-top: 20px;
-    margin-bottom: 25px;
-    width: 35%;
-    border: 1px solid #ccc;
-    padding: 8px 15px;
-    border-radius: 6px;
-    font-size: 20px;
-    outline:none;
+d['ssid'] = ssid
+d['password'] = password
+d['isTryingToConnectToWifi'] = True
+with open('/home/pi/airplayer/Plist.json', 'w') as outfile:
+    outfile.write(json.dumps(d))
 
 
 
-    }
-    input{
-    text-align:center;
+print "Content-type: text/html";
 
-    }
+html = """
 
-    input[type="submit"] {
+<!DOCTYPE html>
+<html>
 
-    background-color: #3498db;
-    width: 190px;
-    height: 55px;
-    margin-top: 25px;
-    border-radius: 10px;
-    border: none;
-    font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
-    color: white;
-    margin-left: auto ;
-    margin-right: auto ;
-    outline: none;
-    }
+<head>
+
+</head>
+<style media="screen">
 
 
+.center {
+max-width: 65%;
+max-height: 65%;
+bottom: 0;
+left: 0;
+margin: auto;
+overflow: auto;
+position: fixed;
+right: 0;
+top: 0;
 
-    </style>
+}
 
-    <body>
+h1{
+text-align: center;
+font-family: 'Open Sans', sans-serif;
+color: #7e8b8c
+}
 
-    <div id="logo" >
-    <img src="http://localhost:8000/logo.png" alt="HTML5 Icon" style="max-width: 20%; max-height: 20%;" class="center">
-    </div>
+</style>
 
-    <h1>incrorect Password. If no password type none</h1>
+<body>
 
-    <h1>Password for "{0}"</h1>
-    <form method='POST' id='form'action='/cgi-bin/wifiConnect.py'>
-    <input type='text' id='text-Input' placeholder='Password' name='password'>
+<img src="http://localhost/logo.png"   alt="HTML5 Icon" class="center">
+<h1>Trying to connect..<h1>
 
-    <br>
-    <input type='submit' value='Connect'>
-    </form>
-
-
-    </div>
+</body>
 
 
 
+</html>
+
+
+"""
 
 
 
-    </body>
-    <script>
-
-
-    </script>
-
-
-    </html>
-
-
-    """.format(htmlList)
-
-    print(htmlString)
-
-
-
-
-
-else:
-
-   print(isConnect)
+print(html)

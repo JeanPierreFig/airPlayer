@@ -1,48 +1,35 @@
 
 import requests
 import json
-import time
 import time, threading
 import urllib.request
 import os
 import webview
-import threading
 import socket
 import fcntl
 import subprocess
-
-
-
-#import import wifihan
 import webServer
+import WifiHandler
 from datetime import datetime
 from createHtml import createHtml
 #from omxplayer import OMXPlayer
 from pathlib import Path
 
 
-#from selenium import webdriver
-#from selenium.webdriver.chrome.options import Options
 
 url = 'http://10.0.0.69/updateContent.php'
 #need to change this to look for saved access_token
 headers = {'content-type': 'application/json'}
 
-
-
 content_list = None
 json_count = 0
-
-
-
-
-
 
 def CheckServerForContent():
 
     with open('/home/pi/airplayer/Plist.json') as json_data:
           global Plist
           Plist = json.load(json_data)
+
     data = {'Access_token':Plist['Access_token']}
     response = requests.post(url, data=json.dumps(data), headers=headers)
     j = json.loads(response.text)
@@ -51,11 +38,10 @@ def CheckServerForContent():
     update = (j['header'][0]['update'])
     storeurl = ''
     if update == 'yes' and is_connected():
+
        count = (j['header'][0]['count'])
        index = 0
        for i in range(count):
-
-
 
           index = i + 1
           link = j['data'][i]['link']
@@ -68,7 +54,7 @@ def CheckServerForContent():
           imageFile = Path(savePathWithName)
 
 
-          #Check if we have the file on the unit to not dowload it again
+          #Check if we have the file on the unit if not download it again
           if imageFile.is_file():
               print("have file")
 
@@ -122,21 +108,16 @@ def CheckServerForContent():
 
 class contentObject(object):
 
+
     def __init__(self,*args,**kwargs):
 
         self.index = 0
         self.contentPath = None
 
-
     def get_next_content_index(self):
 
         #check for amount of itmes on the json list
-
-
         self.index += 1
-
-
-
 
         if self.index > json_count-1:
            self.index = 0
@@ -173,20 +154,14 @@ def content_loop(contentObject):
 
     if content_list[index]['type'] == 'image':
 
-
         if isShowed(contentObject,index):
 
            webview.load_html(createHtml("http://localhost:8000/content/{0}".format(itemName),"content"))
-           print("yes")
-
            time.sleep(5)
 
         else:
-            print("Date not right")
+            print("Will not display content because content schedule.")
             time.sleep(5)
-
-
-
 
     if content_list[index]['type'] == 'video':
         #display video
@@ -234,31 +209,30 @@ def DeleteFiles(j):
 
 
 
+
+
+#This function will check if the content can be display
 def isShowed(contentObject,index):
 
-
-
+    #Format date string
     sDate = content_list[index]['sDate'].split("/")
     eDate = content_list[index]['eDate'].split("/")
     sTime = content_list[index]['sTime'].split("/")
     eTime = content_list[index]['eTime'].split("/")
 
+    #Get Current date
     day = datetime.today().day
     year = datetime.today().year
     month = datetime.today().month
 
-
-
     #Check that the year month and day rang is correct
     if day >= int(sDate[1]) and day <= int(eDate[1]) and month >= int(sDate[0]) and month <= int(eDate[0]) and  year >= int(sDate[2]) and year <= int(eDate[2]):
-
         return True
-
-
     else:
         return False
 
 
+#I might remove this
 def is_connected():
   try:
     # see if we can resolve the host name -- tells us if there is
@@ -283,14 +257,6 @@ def get_ip():
     except OSError:
       return False
 
-def get_interface_ipaddress(network):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    return socket.inet_ntoa(fcntl.ioctl(
-        s.fileno(),
-        0x8915,  # SIOCGIFADDR
-        struct.pack('256s', network[:15])
-    )[20:24])
-
 
 def StartContentServer():
     # if mac test on /Users/jeanpierre/Desktop/webServer
@@ -298,87 +264,148 @@ def StartContentServer():
     webServer.start()
 
 
-def startHotSpot():
-    try:
-        subprocess.call("sudo hotspotd start",shell=True)
-        # change the word lumberjack on the line above to get an error
-    except OSError:
-        print('\nCould not start the hotspotd\n')
-        # if you're using python 2.x, change the () to spaces on the line above
+def ConnectToWifi(ssid,password):
+
+     isConnected = False
+     numTry = 0
+
+     while True:
+         #call WifiHandler function
+         isConnected = WifiHandler.Connect(ssid,password)
+
+         if isConnected != False
+             return True
+
+         if numTry > 5
+            return False
+        #number of trys to connect wifi
+         numTry++
+
+
+
+
+def StartHotSpot():
+
+     numTry = 0
+
+   while True:
+
+         try:
+            subprocess.call("sudo hotspotd start",shell=True)
+
+         except OSError:
+            #There was an error try again
+            numTry++
+            #Return false if the number of trys are more then 5
+            if numTry > 5
+                return False
+
+         else:
+             #The hotspotd was started
+def StopHotSpot():
+
+     numTry = 0
+
+   while True:
+
+         try:
+            subprocess.call("sudo hotspotd stop",shell=True)
+
+         except OSError:
+            #There was an error try again
+            numTry++
+            #Return false if the number of trys are more then 5
+            if numTry > 5
+                return False
+
+         else:
+             #The hotspotd was started
+             return True
+
+
+def Get_Plist():
+
+    with open('/home/pi/airplayer/Plist.json') as json_data:
+         return Plist = json.load(json_data)
+
+def Set_Plist(ssid,password,isTryingWifi,isSetup):
+
+    d['ssid'] = ssid
+    d['password'] = password
+    d['isSetup'] = isSetup
+    d['isTryingToConnectToWifi'] = isTryingWifi
+
+    with open('/home/pi/airplayer/Plist.json', 'w') as outfile:
+        outfile.write(json.dumps(d))
+
 
 def main():
 
-
-    #wifihan.Connect("Claro425EE1","0C77A3FADB")
-
-    #print(isConnected)
-
-    with open('/home/pi/airplayer/Plist.json') as json_data:
-
-          global Plist
-          Plist = json.load(json_data)
-
-    s = threading.Thread(target=StartContentServer)
-    s.start()
+    #Get device settings
+    Plist = Get_Plist()
 
 
-
+    #sever stuff
+    #s = threading.Thread(target=StartContentServer)
+    #s.start()
 
     if Plist["isSetup"]:
-            print("yes")
+
+
 
             CheckServerForContent()
             contentObj = contentObject()
             create_content_list()
             webview.load_html(createHtml("","logo"))
 
-
+            #Main content loop
             while True:
 
                   content_loop(contentObj)
 
+
     else:
-        print("no")
 
-        try:
-            subprocess.call("sudo hotspotd start",shell=True)
 
-        except OSError:
-            startHotSpot()
-
+        if StartHotSpot() != False:
+            webview.load_html(createHtml("169.254.9.20","Access_token"))
+        else:
+            webview.load_html(createHtml("There was a problem creating the Wi-Fi hotspot.","Message"))
 
 
 
-        webview.load_html(createHtml("169.254.9.20","Access_token"))
-        print('hotspotd')
-        # I have to check if this if is correct
-
-
-        while Plist["isSetup"] == False:
-
-
-
-
-              with open('/home/pi/airplayer/Plist.json') as json_data:
-                       Plist = json.load(json_data)
-                       time.sleep(15)
+        #Check every 10 sec if the the user has added the wifi credential
+        while Plist["isTryingToConnectToWifi"] == False:
+            Plist = Get_Plist()
+            time.sleep(10)
 
         else:
+            webview.load_html(createHtml("Trying to connect...","Message"))
 
-            CheckServerForContent()
-            contentObj = contentObject()
-            create_content_list()
-            webview.load_html(createHtml("","logo"))
+            StopHotSpot()
+            Plist = Get_Plist()
+            if ConnectToWifi(Plist["ssid"],Plist["password"]) != False:
 
+                Set_Plist("","",False,True)
 
-            while True:
+                #!!!! still need to make the user set the access token!!!!
+
+                #Run the program
+                CheckServerForContent()
+                contentObj = contentObject()
+                create_content_list()
+                webview.load_html(createHtml("","logo"))
+
+                #Main content loop
+                while True:
 
                       content_loop(contentObj)
-
-
-
-
-
+             else:
+                Set_Plist("","",False,False)
+                webview.load_html(createHtml("There was a problem connecting to the WiFI network. Lets try again.","Message"))
+                time.sleep(10)
+                #Call main again to restart the steup process
+                main()
 
 
 

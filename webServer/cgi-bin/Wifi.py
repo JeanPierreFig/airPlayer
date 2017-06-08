@@ -1,16 +1,15 @@
 #!/usr/bin/python3
 
 import cgi, cgitb, os
-import wifiHandler
-
+import WifiHandler
 cgitb.enable()
 
-
+#Get a list of wifi networks available
 wifiList = wifiHandler.Search()
 
 global htmlList
 
-htmlList = '-'
+htmlList = " "
 
 for wifi in wifiList:
 
