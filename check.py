@@ -273,20 +273,20 @@ def ConnectToWifi(ssid,password):
          #call WifiHandler function
          isConnected = WifiHandler.Connect(ssid,password)
 
-         if isConnected != False
+         if isConnected != False:
              return True
 
-         if numTry > 5
+         if numTry > 5:
             return False
         #number of trys to connect wifi
-         numTry++
+         numTry += 1
 
 
 
 
 def StartHotSpot():
 
-     numTry = 0
+   numTry = 0
 
    while True:
 
@@ -295,16 +295,18 @@ def StartHotSpot():
 
          except OSError:
             #There was an error try again
-            numTry++
+            numTry += 1
             #Return false if the number of trys are more then 5
-            if numTry > 5
+            if numTry > 5:
                 return False
 
          else:
              #The hotspotd was started
+             return True
+
 def StopHotSpot():
 
-     numTry = 0
+   numTry = 0
 
    while True:
 
@@ -313,20 +315,22 @@ def StopHotSpot():
 
          except OSError:
             #There was an error try again
-            numTry++
+            numTry += 1
             #Return false if the number of trys are more then 5
-            if numTry > 5
+            if numTry > 5:
                 return False
 
          else:
-             #The hotspotd was started
+             #The hotspotd was stoped
              return True
 
 
 def Get_Plist():
 
     with open('/home/pi/airplayer/Plist.json') as json_data:
-         return Plist = json.load(json_data)
+          Plist = json.load(json_data
+
+    return Plist
 
 def Set_Plist(ssid,password,isTryingWifi,isSetup):
 
@@ -344,10 +348,6 @@ def main():
     #Get device settings
     Plist = Get_Plist()
 
-
-    #sever stuff
-    #s = threading.Thread(target=StartContentServer)
-    #s.start()
 
     if Plist["isSetup"]:
 
@@ -400,7 +400,7 @@ def main():
                 while True:
 
                       content_loop(contentObj)
-             else:
+            else:
                 Set_Plist("","",False,False)
                 webview.load_html(createHtml("There was a problem connecting to the WiFI network. Lets try again.","Message"))
                 time.sleep(10)
@@ -414,10 +414,14 @@ def main():
 if __name__ == "__main__":
 
     try:
-
+        
+       #start server.
+       s = threading.Thread(target=StartContentServer)
+       s.start()
+       #start main Program.
        t = threading.Thread(target=main)
        t.start()
-
+       #start webview to display content.
        webview.create_window("","",fullscreen=False)
 
 

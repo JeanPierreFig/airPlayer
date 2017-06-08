@@ -9,12 +9,12 @@ wifiList = wifiHandler.Search()
 
 global htmlList
 
-htmlList = " "
+htmlList = ""
 
 for wifi in wifiList:
 
-    htmlList += "<tr><td>{0}</td></tr>".format(wifi.ssid)
-
+    if wifi.ssid != "":
+       htmlList += "<tr><td>{0}</td></tr>".format(wifi.ssid)
 
 
 print ("Content-type: text/html\n\n")
@@ -26,8 +26,7 @@ htmlString = """
 
 <head>
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:600" rel="stylesheet">
-<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
-
+<script src='/js/jquery-3.2.1.min.js'></script>
 </head>
 
 <style media="screen">
@@ -131,7 +130,7 @@ outline: none;
 
 <div class="tableview">
 <table id="table">
- {}
+ //list//
 
 </table>
 </div>
@@ -152,11 +151,13 @@ outline: none;
 <script>
 
 $("#table tr").click(function(){
+
 $(this).addClass('selected').siblings().removeClass('selected');
 var value=$(this).find('td:first').html();
 
 $("#wifiList").remove();
-    $("#wifiPassword").append("<h1>Password for "+value+"</h1><form method='POST' id='form'action='/cgi-bin/wifiConnect.py'><input type='text' id='text-Input' placeholder='Password' name='password' value=''> <input type='hidden' name='ssid' value='"+value+"'><br> <input type='submit' value='Connect'></form>")
+
+    $("#wifiPassword").append("<h1>Password for "+value+"</h1><form method='POST' id='form' action='/cgi-bin/wifiConnect.py'> <input type='text' id='text-Input' placeholder='Password' name='password' value=''> <input type='hidden' name='ssid' value='"+value+"'><br> <input type='submit' value='Connect'></form>")
 
 });
 
@@ -169,8 +170,8 @@ alert($("#table tr.selected td:first").html());
 
 </html>
 
-"""
+""".replace('//list//', htmlList)
 
 
 
-print(htmlString.format(htmlList)
+print(htmlString)
