@@ -425,7 +425,7 @@ if __name__ == "__main__":
        t.start()
        #start webview to display content.
        webview.create_window("","",fullscreen=False)
-       webview.load_html(createHtml("Staring Player","logo"))
+
 
 
     except:

@@ -20,12 +20,10 @@ for wifi in wifiList:
 print ("Content-type: text/html\n\n")
 
 htmlString = """
-
 <!DOCTYPE html>
 <html>
 
 <head>
-<link href="https://fonts.googleapis.com/css?family=Open+Sans:600" rel="stylesheet">
 <script src='/js/jquery-3.2.1.min.js'></script>
 </head>
 
@@ -121,19 +119,20 @@ outline: none;
 <body>
 
 <div id="logo" >
-<img src="/logo.png" alt="HTML5 Icon" style="max-width: 20%; max-height: 20%;" class="center">
+
+<img src="http://localhost/logo.png" alt="HTML5 Icon" style="max-width: 20%; max-height: 20%;" class="center">
 </div>
 
 <div id="wifiList">
-<h1>Select your wifi network.</h1>
 
+ <h1>Select your WiFi network.</h1>
+ <div class="tableview">
 
-<div class="tableview">
-<table id="table">
- //list//
+   <table id="table">
+     //list//
+   </table>
 
-</table>
-</div>
+ </div>
 
 </div>
 

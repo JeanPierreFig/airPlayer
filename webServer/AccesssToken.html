@@ -3,25 +3,17 @@
 
 <head>
 <script src='/js/jquery-3.2.1.min.js'></script>
+<link rel='stylesheet' href='/css/animate.css'>
 </head>
 
 <script>
-
 </script>
 <style media="screen">
-
 h3{
   text-align: center;
   font-family: 'Open Sans', sans-serif;
   color: #929292;
-
-
 }
-h2{
-      text-align: center;
-      font-family: 'Open Sans', sans-serif;
-      color: #929292
-  }
 h1{
   text-align: center;
   font-family: 'Open Sans', sans-serif;
@@ -39,14 +31,11 @@ input[type=text] {
   border-radius: 6px;
   font-size: 20px;
   outline:none;
-
-
 }
 input{
    text-align:center;
 }
 input[type="submit"] {
-
   background-color: #3498db;
   width: 190px;
   height: 55px;
@@ -60,34 +49,46 @@ input[type="submit"] {
   margin-left: auto ;
   margin-right: auto ;
   outline:none;
-
 }
-
-
 #logo {
   text-align: center;
   margin-top: 100px;
-
-
 }
-
-
 </style>
 
- <body>
+<body>
 
   <div id="logo" >
     <img src="/logo.png" alt="HTML5 Icon" style="max-width: 20%; max-height: 20%;" class="center">
   </div>
 
-  <h1>Setup</h1>
-  <h3>First, We need the device Access token.<br>It can be found on the website under Store -> Screen -> Device info </h3>
-
-  <form method='POST' id='form' action='/AccesssToken.html'>
-  <input type='submit' value='Start'>
+  <form method='POST' id='form' action='/cgi-bin/formHandler.py'>
+     <input type='text' placeholder="Device token" name='token'>
+    <br>
+  <input type='submit' value='Activate Device'>
   </form>
 
 
- </body>
+</body>
+
+
+<script>
+ $('#form').submit(function( event ) {
+ var text = $('#form').find('input[name="token"]').val();
+ if(text != '' text.length > 23){
+   console.log("submit");
+  $(body).off("submit", "form");
+  $('#form').submit();
+ }
+ else{
+ $('input[name="token"]').addClass('animated shake').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
+    function() {
+    $(this).removeClass('animated shake');
+ });
+ }
+ event.preventDefault();
+ });
+</script>
+
 
 </html>

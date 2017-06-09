@@ -13,7 +13,7 @@ ssid = formData['ssid'].value
 
 
 #Get the json file and store it in d
-with open('./airplayer/Plist.json', 'r') as json_data:
+with open('/home/pi/airPlayer/Plist.json', 'r') as json_data:
     d = json.load(json_data)
 
 
@@ -23,7 +23,7 @@ d['password'] = password
 d['isTryingToConnectToWifi'] = True
 
 #Write to the file the new values
-with open('./airplayer/Plist.json', 'w') as outfile:
+with open('/home/pi/airPlayer/Plist.json', 'w') as outfile:
     outfile.write(json.dumps(d))
 
 
@@ -40,32 +40,36 @@ html = """
 </head>
 <style media="screen">
 
+      h2{
+      text-align: center;
+      font-family: 'Open Sans', sans-serif;
+      color: #929292
 
-.center {
-max-width: 65%;
-max-height: 65%;
-bottom: 0;
-left: 0;
-margin: auto;
-overflow: auto;
-position: fixed;
-right: 0;
-top: 0;
 
-}
+      }
+      h1{
+      text-align: center;
+      font-family: 'Open Sans', sans-serif;
+      color: #7e8b8c
+      }
 
-h1{
-text-align: center;
-font-family: 'Open Sans', sans-serif;
-color: #7e8b8c
-}
+      #logo {
+      text-align: center;
+      margin-top: 100px;
 
-</style>
+
+      }
+      </style>
+
 
 <body>
 
-<img src="http://localhost/logo.png"   alt="HTML5 Icon" class="center">
-<h1>Trying to connect..<h1>
+<div id="logo" >
+  <img src="/logo.png" alt="HTML5 Icon" style="max-width: 20%; max-height: 20%;" class="center">
+</div>
+
+<h1>The player will try to connect to wifi.<h1>
+<h2>Follow the player on screen instructions.</h2>
 
 </body>
 
