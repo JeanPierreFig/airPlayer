@@ -5,7 +5,7 @@ import WifiHandler
 cgitb.enable()
 
 #Get a list of wifi networks available
-wifiList = wifiHandler.Search()
+wifiList = WifiHandler.Search()
 
 global htmlList
 
@@ -121,7 +121,7 @@ outline: none;
 <body>
 
 <div id="logo" >
-<img src="http://localhost:8000/logo.png" alt="HTML5 Icon" style="max-width: 20%; max-height: 20%;" class="center">
+<img src="/logo.png" alt="HTML5 Icon" style="max-width: 20%; max-height: 20%;" class="center">
 </div>
 
 <div id="wifiList">

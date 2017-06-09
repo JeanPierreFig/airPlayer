@@ -1,7 +1,6 @@
 #!/usr/bin/python3
-import wifiHandler
-import cgi, cgitb;
-
+import cgi, cgitb
+import json
 
 cgitb.enable()
 
@@ -12,15 +11,24 @@ ssid = formData['ssid'].value
 
 
 
+
+#Get the json file and store it in d
+with open('./airplayer/Plist.json', 'r') as json_data:
+    d = json.load(json_data)
+
+
+#set the new vaules
 d['ssid'] = ssid
 d['password'] = password
 d['isTryingToConnectToWifi'] = True
-with open('/home/pi/airplayer/Plist.json', 'w') as outfile:
+
+#Write to the file the new values
+with open('./airplayer/Plist.json', 'w') as outfile:
     outfile.write(json.dumps(d))
 
 
 
-print "Content-type: text/html";
+print ("Content-type: text/html\n\n")
 
 html = """
 

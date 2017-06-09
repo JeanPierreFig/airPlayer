@@ -130,7 +130,8 @@ def createHtml(data,type):
 
             <body>
 
-            <img src="http://localhost/logo.png"   alt="HTML5 Icon" class="center">
+            <img src="http://localhost:8000/logo.png" alt="HTML5 Icon" style="max-width: 20%; max-height: 20%;" class="center">
+
 
             </body>
 
@@ -205,24 +206,30 @@ def createHtml(data,type):
             </head>
             <style media="screen">
 
+            h2{
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+            color: #929292
 
-            .center {
-            max-width: 65%;
-            max-height: 65%;
-            bottom: 0;
-            left: 0;
-            margin: auto;
-            overflow: auto;
-            position: fixed;
-            right: 0;
-            top: 0;
+
+            }
+            h1{
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+            color: #7e8b8c
+            }
+
+            #logo {
+            text-align: center;
+            margin-top: 100px;
+
 
             }
             </style>
 
             <body>
-            
-            <img src="http://localhost:8000/logo.png"   alt="HTML5 Icon" class="center">
+
+            <img src="http://localhost:8000/logo.png" alt="HTML5 Icon" style="max-width: 20%; max-height: 20%;" class="center">
 
             <h3>//message//</h3>
 
@@ -233,6 +240,6 @@ def createHtml(data,type):
             </html>
 
 
-            """.replace('/message/', data)
+            """.replace('//message//', data)
 
     return html

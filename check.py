@@ -1,4 +1,3 @@
-
 import requests
 import json
 import time, threading
@@ -26,7 +25,7 @@ json_count = 0
 
 def CheckServerForContent():
 
-    with open('/home/pi/airplayer/Plist.json') as json_data:
+    with open('/home/pi/airPlayer/Plist.json') as json_data:
           global Plist
           Plist = json.load(json_data)
 
@@ -49,7 +48,7 @@ def CheckServerForContent():
           imageURl = "{0}".format(link)
 
 
-          savePathWithName = "/home/pi/airplayer/webServer/content/{0}".format(linkArray[-1])
+          savePathWithName = "/home/pi/airPlayer/webServer/content/{0}".format(linkArray[-1])
 
           imageFile = Path(savePathWithName)
 
@@ -76,7 +75,7 @@ def CheckServerForContent():
        if index == count:
           print('all good')
 
-          with open('/home/pi/airplayer/data.json', 'w') as outfile:
+          with open('/home/pi/airPlayer/data.json', 'w') as outfile:
               outfile.write(json.dumps(j))
 
           create_content_list()
@@ -182,7 +181,7 @@ def DeleteFiles(j):
 
     # if mac test on /Users/jeanpierre/Desktop/images/
 
-    listOfFiles = os.listdir("/home/pi/airplayer/webServer/content/")
+    listOfFiles = os.listdir("/home/pi/airPlayer/webServer/content/")
 
     count = (j['header'][0]['count'])
     print(listOfFiles)
@@ -260,7 +259,7 @@ def get_ip():
 
 def StartContentServer():
     # if mac test on /Users/jeanpierre/Desktop/webServer
-    os.chdir("/home/pi/airplayer/webServer")
+    os.chdir("/home/pi/airPlayer/webServer")
     webServer.start()
 
 
@@ -327,20 +326,23 @@ def StopHotSpot():
 
 def Get_Plist():
 
-    with open('/home/pi/airplayer/Plist.json') as json_data:
-          Plist = json.load(json_data
+    with open('/home/pi/airPlayer/Plist.json') as json_data:
+          Plist = json.load(json_data)
 
     return Plist
 
 def Set_Plist(ssid,password,isTryingWifi,isSetup):
 
-    d['ssid'] = ssid
-    d['password'] = password
-    d['isSetup'] = isSetup
-    d['isTryingToConnectToWifi'] = isTryingWifi
 
-    with open('/home/pi/airplayer/Plist.json', 'w') as outfile:
-        outfile.write(json.dumps(d))
+    Plist = Get_Plist()
+
+    Plist['ssid'] = ssid
+    Plist['password'] = password
+    Plist['isSetup'] = isSetup
+    Plist['isTryingToConnectToWifi'] = isTryingWifi
+
+    with open('/home/pi/airPlayer/Plist.json', 'w') as outfile:
+        outfile.write(json.dumps(Plist))
 
 
 def main():
@@ -386,15 +388,15 @@ def main():
             Plist = Get_Plist()
             if ConnectToWifi(Plist["ssid"],Plist["password"]) != False:
 
-                Set_Plist("","",False,True)
+                #Set_Plist("","",False,True)
 
                 #!!!! still need to make the user set the access token!!!!
 
                 #Run the program
-                CheckServerForContent()
-                contentObj = contentObject()
-                create_content_list()
-                webview.load_html(createHtml("","logo"))
+                #CheckServerForContent()
+                #contentObj = contentObject()
+                #create_content_list()
+                webview.load_html(createHtml("Staring Player","logo"))
 
                 #Main content loop
                 while True:
@@ -414,7 +416,7 @@ def main():
 if __name__ == "__main__":
 
     try:
-        
+
        #start server.
        s = threading.Thread(target=StartContentServer)
        s.start()
@@ -423,6 +425,7 @@ if __name__ == "__main__":
        t.start()
        #start webview to display content.
        webview.create_window("","",fullscreen=False)
+       webview.load_html(createHtml("Staring Player","logo"))
 
 
     except:

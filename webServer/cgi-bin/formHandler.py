@@ -1,8 +1,7 @@
 #!/usr/bin/python
-import cgi, cgitb;
+import cgi, cgitb
 import json
 import requests
-import wifi
 
 cgitb.enable()
 
@@ -22,7 +21,7 @@ def getserial():
         f.close()
     except:
       cpuserial = "ERROR000000000"
-                            
+
     return cpuserial
 
 
@@ -53,8 +52,8 @@ print "Content-type: text/html\n\n";
 
 
 if device == 'yes' and isActivated == '0':
-    
-    
+
+
            d['Access_token'] = accessToken
            d['isSetup'] = True
            with open('/home/pi/Plist.json', 'w') as outfile:
@@ -68,79 +67,79 @@ if device == 'yes' and isActivated == '0':
 
 
            print """
-               
+
            <!DOCTYPE html>
            <html>
-           
+
            <head>
            <link href="https://fonts.googleapis.com/css?family=Open+Sans:600" rel="stylesheet"></head>
            <style media="screen">
-           
+
            h3{
            text-align: center;
            font-family: 'Open Sans', sans-serif;
            color: #929292
-           
-           
+
+
            }
            h1{
            text-align: center;
            font-family: 'Open Sans', sans-serif;
            color: #7e8b8c
            }
-           
+
            #logo {
            text-align: center;
            margin-top: 100px;
-           
-           
+
+
            }
            </style>
-           
+
            <body>
-           
+
            <div id="logo" >
            <img src="http://localhost:8000/greenCheck.png" alt="HTML5 Icon" style="max-width: 20%; max-height: 20%;" class="center">
 
            </div>
 
            <h1>All Done, Your content will start Showing in a few minutes.<h1>
-           
-           
+
+
            </body>
-           
-           
-           
+
+
+
            </html>
 
-           
-           
-           
-           
+
+
+
+
            """
 else:
    print """
-       
+
        <!DOCTYPE html>
        <html>
-       
+
        <head>
        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js'></script>
 
        <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
 
        <link href='https://fonts.googleapis.com/css?family=Open+Sans:600' rel='stylesheet'>
-       
+
        </head>
-       
+
        <style media='screen'>
-       
+
        h3{
        text-align: center;
        font-family: 'Open Sans', sans-serif;
        color: #929292
-       
-       
+
+
        }
        h1{
        text-align: center;
@@ -159,17 +158,17 @@ else:
        border-radius: 6px;
        font-size: 20px;
        outline:none;
-       
-       
-       
+
+
+
        }
        input{
        text-align:center;
-       
+
        }
-       
+
        input[type="submit"] {
-       
+
        background-color: #3498db;
        width: 190px;
        height: 55px;
@@ -183,26 +182,26 @@ else:
        margin-right: auto ;
        outline: none;
        }
-       
-       
+
+
        #logo {
        text-align: center;
        margin-top: 100px;
-       
-       
-       }
-       
-       
 
-       
+
+       }
+
+
+
+
        </style>
-       
-       
-      
-       
-       
+
+
+
+
+
        <body>
-       
+
        <div id="logo" >
        <img src="http://localhost:8000/logo.png" alt="HTML5 Icon" style="max-width: 15%; max-height: 15%;" class="center">
        <h1>Try again, The access token was incorect.
@@ -214,50 +213,50 @@ else:
        <br>
        <input type='submit' value='Activate Device'>
        </form>
-       
-       
+
+
        </body>
-       
-       
+
+
        <script>
-       
+
        $('#form').submit(function( event ) {
-       
+
        var text = $('#form').find('input[name="token"]').val();
-       
+
        if(text != ''){
-        
+
          console.log("submit");
         $(body).off("submit", "form");
         $('#form').submit();
        }
        else{
-       
-       $('input[name="token"]').addClass('animated shake').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', 
+
+       $('input[name="token"]').addClass('animated shake').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
           function() {
           $(this).removeClass('animated shake');
-        
+
        });
-       
-       
+
+
        }
 
        event.preventDefault();
        });
-       
+
        $('input[name="token"]').addClass('animated shake').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend',
        function() {
        $(this).removeClass('animated shake');
-       
+
        });
 
        </script>
-       
-       
+
+
        </html>
 
-       
-    
-       
-       
+
+
+
+
        """
