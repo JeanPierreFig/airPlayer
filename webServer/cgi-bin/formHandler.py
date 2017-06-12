@@ -25,7 +25,6 @@ def getserial():
 
 with open('/home/pi/airPlayer/Plist.json', 'r') as json_data:
     d = json.load(json_data)
-
     d['Access_token'] = accessToken
     d['Device_Serial'] = getserial()
 
@@ -34,4 +33,27 @@ with open('/home/pi/airPlayer/Plist.json', 'r') as json_data:
 with open('/home/pi/airPlayer/Plist.json', 'w') as outfile:
     outfile.write(json.dumps(d))
 
-    print ("Location: /cgi-bin/Wifi.py")
+
+
+print ("Content-type: text/html\n\n")
+
+html = """
+
+<!DOCTYPE html>
+<html>
+<head>
+   <!-- HTML meta refresh URL redirection -->
+   <meta http-equiv="refresh"
+   content="0; url=http://localhost:8000/cgi-bin/Wifi.py">
+</head>
+<body>
+   <p>The page has moved to:
+   <a href="http://www.mydomain.com/new-page.html">this page</a></p>
+</body>
+</html>
+
+"""
+
+
+
+print(html)

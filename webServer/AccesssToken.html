@@ -74,8 +74,9 @@ input[type="submit"] {
 
 <script>
  $('#form').submit(function( event ) {
+
  var text = $('#form').find('input[name="token"]').val();
- if(text != '' text.length > 23){
+ if(text != '' && text.length > 23){
    console.log("submit");
   $(body).off("submit", "form");
   $('#form').submit();
